@@ -1,1 +1,12 @@
-Initial Commit
+NAME
+	compare.py -- compare bootstrap,gibbs samples with truth values
+
+USAGE
+	python compare.py -b <bootstrap_file> -g <gibbs_file> -t <truth_file>
+
+DESCRIPTION
+	Bootstrap file - quant_bootstraps.sf file in the Bootstrap output folder
+	Gibbs file - samples.txt file in the Gibbs output folder
+	Truth file - config.pro file
+REQUIREMENTS
+	Python Pandas, Statistics

@@ -1,5 +1,5 @@
 import pandas as pd
-import os
+import os, sys, getopt
 from statistics import mean,median
 
 def compare(boot,gibb,truth):
@@ -42,7 +42,7 @@ def compare(boot,gibb,truth):
 
 	text_file.close()
 	f.close()
-	print "========================RANGE=========================="
+	print "\n========================RANGE=========================="
 	print "No.of Bootstrap values that contain truth value WITHIN range", range1
 	print "No.of Bootstrap values that contain truth value OUT OF range", range2
 
@@ -123,15 +123,41 @@ def compare(boot,gibb,truth):
 	os.remove(file1)
 	os.remove(file2)
 
+argv = sys.argv[1:]
+bfile = ''
+gfile = ''
+tfile = ''
+try:
+	opts, args = getopt.getopt(argv,"hb:g:t:",["bfile=","gfile=","tfile="])
+except getopt.GetoptError:
+	print 'Provide arguments properly\n'
+	os.system('cat README')
+	sys.exit(2)
+for opt, arg in opts:
+	if opt == '-h':
+		os.system('cat README')
+		sys.exit()
+	elif opt in ("-b", "--bfile"):
+		bfile = arg
+	elif opt in ("-g", "--gfile"):
+		gfile = arg
+	elif opt in ("-t", "--tfile"):
+		tfile = arg
+
+if(bfile == '' or gfile == '' or tfile == ''):
+	print 'Provide bootstrap, gibbs and truth files\n'
+	os.system('cat README')
+	sys.exit(2)
+
 #Temp file names
 boot = "bootstrap.sf"
 gibb = "gibbs.sf"
 truth= "truth.pro"
 
-lines = open('quant_bootstraps.sf').readlines()
+lines = open(bfile).readlines()
 open(boot, 'w').writelines(lines[11:])
 
-lines = open('samples.txt').readlines()
+lines = open(gfile).readlines()
 open(gibb, 'w').writelines(lines[1:])
 
 df = pd.read_csv(boot,delimiter='\t')
@@ -149,7 +175,7 @@ df.columns = lst
 df.to_csv(gibb,sep='\t',index=False)
 #print df
 
-df = pd.read_csv('config.pro',delimiter='\t',header=None,index_col=None)
+df = pd.read_csv(tfile,delimiter='\t',header=None,index_col=None)
 lst = range(3,len(df.columns)+1)
 lst.insert(0, 'transcript')
 lst.insert(0, 'x')
