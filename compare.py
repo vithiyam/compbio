@@ -42,6 +42,9 @@ def compare(boot,gibb,truth):
 
 	text_file.close()
 	f.close()
+
+	print "\nTotal no.of Transcripts", range1+range2
+
 	print "\n========================RANGE=========================="
 	print "No.of Bootstrap values that contain truth value WITHIN range", range1
 	print "No.of Bootstrap values that contain truth value OUT OF range", range2

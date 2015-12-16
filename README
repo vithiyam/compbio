@@ -8,5 +8,6 @@ DESCRIPTION
 	Bootstrap file - quant_bootstraps.sf file in the Bootstrap output folder
 	Gibbs file - samples.txt file in the Gibbs output folder
 	Truth file - config.pro file
+
 REQUIREMENTS
 	Python Pandas, Statistics
